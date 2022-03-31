@@ -19,8 +19,9 @@
         <td> 0.9987 </td>
     </tr>
 </table>
+
 ## Introduction
-This repository implements the proposed method from **ECCV 2018 paper "License Plate Detection and Recognition in Unconstrained Scenarios"** in PyTorch. \
+This repository implements the proposed method from **ECCV 2018 paper ["License Plate Detection and Recognition in Unconstrained Scenarios"](https://openaccess.thecvf.com/content_ECCV_2018/papers/Sergio_Silva_License_Plate_Detection_ECCV_2018_paper.pdf)** in PyTorch. \
 The model in Keras relates to [sergiomsilva/alpr-unconstrained](https://github.com/sergiomsilva/alpr-unconstrained), which is published by the author.
 
 ## Quick Run
@@ -39,3 +40,14 @@ The model in Keras relates to [sergiomsilva/alpr-unconstrained](https://github.c
 2. Inference with bulk of images or video
 3. Introduce training procedure
 4. The matrix multiplication seems weird in function `postprocess`, may improve the computation.
+
+## Citation
+```bibtex
+@inproceedings{silva2018license,
+  title={License plate detection and recognition in unconstrained scenarios},
+  author={Silva, Sergio Montazzolli and Jung, Cl{\'a}udio Rosito},
+  booktitle={Proceedings of the European conference on computer vision (ECCV)},
+  pages={580--596},
+  year={2018}
+}
+```
