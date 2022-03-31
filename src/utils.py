@@ -1,5 +1,4 @@
 from enum import Enum, auto
-from io import UnsupportedOperation
 from typing import Any, Union
 import numpy as np
 
@@ -16,7 +15,7 @@ def select_device(index: Union[str, int]):
             return torch.device('cuda', 0)
         if index == 'cpu':
             return torch.device('cpu')
-    raise UnsupportedOperation('unsupported device ordinal')
+    raise TypeError('unsupported device ordinal')
 
 
 class Format(Enum):
