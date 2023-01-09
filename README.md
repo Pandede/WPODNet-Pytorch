@@ -29,7 +29,7 @@ The model in Keras relates to [sergiomsilva/alpr-unconstrained](https://github.c
     ```bash
     python3 -m pip install -r requirements.txt
     ```
-2. Download the pretrained weight `wpodnet.pth` from [Google Drive](https://drive.google.com/file/d/1vpRs1lsr_xAmRPAIZInETSZrAUD3bpfl/view?usp=sharing)
+2. Download the pretrained weight `wpodnet.pth` from [Google Drive](https://drive.google.com/file/d/1SPfJIgEBX6j0fQbQryQxRp_sHkEnJnKa/view?usp=share_link)
 3. Run inference with single image
     ```bash
     python3 inference.py --source <image path> --weight <weight path> --output <output folder>
