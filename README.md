@@ -1,16 +1,28 @@
-# WPODNet-Pytorch
+# WPODNet: Build with Torch
+## Introduction
+This repository implements the proposed method from **ECCV 2018 paper ["License Plate Detection and Recognition in Unconstrained Scenarios"](https://openaccess.thecvf.com/content_ECCV_2018/papers/Sergio_Silva_License_Plate_Detection_ECCV_2018_paper.pdf)** in Torch.
+
+The model in Keras is built by the essay author, see [sergiomsilva/alpr-unconstrained](https://github.com/sergiomsilva/alpr-unconstrained).
+
+
 <table>
     <tr>
         <td> Example </td>
-        <td> <img src="./docs/sample/03009.jpg" width="300px"></td>
-        <td> <img src="./docs/sample/03016.jpg" width="300px"></td>
-        <td> <img src="./docs/sample/03025.jpg" width="300px"></td>
+        <td> <img src="./docs/sample/original/03009.jpg" width="33%"></td>
+        <td> <img src="./docs/sample/original/03016.jpg" width="33%"></td>
+        <td> <img src="./docs/sample/original/03025.jpg" width="33%"></td>
     </tr> 
     <tr>
-        <td> License </td>
-        <td><img src="./docs/sample/license_03009.jpg" width="300px"></td>
-        <td><img src="./docs/sample/license_03016.jpg" width="300px"></td>
-        <td><img src="./docs/sample/license_03025.jpg" width="300px"></td>
+        <td> Annotated </td>
+        <td><img src="./docs/sample/annotated/03009.jpg" width="33%"></td>
+        <td><img src="./docs/sample/annotated/03016.jpg" width="33%"></td>
+        <td><img src="./docs/sample/annotated/03025.jpg" width="33%"></td>
+    </tr>
+    <tr>
+        <td> Warp perspective </td>
+        <td><img src="./docs/sample/warped/03009.jpg" width="33%"></td>
+        <td><img src="./docs/sample/warped/03016.jpg" width="33%"></td>
+        <td><img src="./docs/sample/warped/03025.jpg" width="33%"></td>
     </tr>
     <tr>
         <td> Confidence </td>
@@ -20,26 +32,30 @@
     </tr>
 </table>
 
-## Introduction
-This repository implements the proposed method from **ECCV 2018 paper ["License Plate Detection and Recognition in Unconstrained Scenarios"](https://openaccess.thecvf.com/content_ECCV_2018/papers/Sergio_Silva_License_Plate_Detection_ECCV_2018_paper.pdf)** in PyTorch. \
-The model in Keras relates to [sergiomsilva/alpr-unconstrained](https://github.com/sergiomsilva/alpr-unconstrained), which is published by the author.
-
 ## Quick Run
-1. Install [PyTorch](https://pytorch.org) and required packages in `requirements.txt`
+1. Clone this repository
     ```bash
-    python3 -m pip install -r requirements.txt
+    git clone https://github.com/Pandede/WPODNet-Pytorch.git
     ```
-2. Download the pretrained weight `wpodnet.pth` from [Google Drive](https://drive.google.com/file/d/1SPfJIgEBX6j0fQbQryQxRp_sHkEnJnKa/view?usp=share_link)
-3. Run inference with single image
+2. Install [PyTorch](https://pytorch.org) depends on your environment.
+3. Install packages in `requirements.txt`
     ```bash
-    python3 inference.py --source <image path> --weight <weight path> --output <output folder>
+    pip3 install -r requirements.txt
+    ```
+4. Download the pretrained weight `wpodnet.pth` from [Google Drive](https://drive.google.com/file/d/1SPfJIgEBX6j0fQbQryQxRp_sHkEnJnKa/view?usp=share_link)
+5. Predict with an image
+    ```bash
+    python3 predict.py  docs/sample/original/03009.jpg \                    # The path to the image
+                        -w weights/wpodnet.pth \                            # The path to the weight
+                        --save-annotated docs/sample/annotated/03009.jpg    # The path to save the annotated image
+                        --save-warped docs/sample/warped/03009.jpg          # The path to save the warped image
     ```
 
 ## Future works
-1. Inference with GPU
-2. Inference with bulk of images or video
-3. Introduce training procedure
-4. The matrix multiplication seems weird in function `postprocess`, may improve the computation.
+- [x] Inference with GPU
+- [ ] Inference with bulk of images or video
+- [ ] Introduce training procedure
+- [x] The matrix multiplication seems weird in function `postprocess`, may improve the computation.
 
 ## Citation
 ```bibtex
