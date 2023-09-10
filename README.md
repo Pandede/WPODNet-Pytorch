@@ -8,21 +8,21 @@ The model in Keras is built by the essay author, see [sergiomsilva/alpr-unconstr
 <table>
     <tr>
         <td> Example </td>
-        <td> <img src="./docs/sample/original/03009.jpg" width="33%"></td>
-        <td> <img src="./docs/sample/original/03016.jpg" width="33%"></td>
-        <td> <img src="./docs/sample/original/03025.jpg" width="33%"></td>
+        <td> <img src="./docs/sample/original/03009.jpg" width="300px"></td>
+        <td> <img src="./docs/sample/original/03016.jpg" width="300px"></td>
+        <td> <img src="./docs/sample/original/03025.jpg" width="300px"></td>
     </tr> 
     <tr>
         <td> Annotated </td>
-        <td><img src="./docs/sample/annotated/03009.jpg" width="33%"></td>
-        <td><img src="./docs/sample/annotated/03016.jpg" width="33%"></td>
-        <td><img src="./docs/sample/annotated/03025.jpg" width="33%"></td>
+        <td><img src="./docs/sample/annotated/03009.jpg" width="300px"></td>
+        <td><img src="./docs/sample/annotated/03016.jpg" width="300px"></td>
+        <td><img src="./docs/sample/annotated/03025.jpg" width="300px"></td>
     </tr>
     <tr>
         <td> Warp perspective </td>
-        <td><img src="./docs/sample/warped/03009.jpg" width="33%"></td>
-        <td><img src="./docs/sample/warped/03016.jpg" width="33%"></td>
-        <td><img src="./docs/sample/warped/03025.jpg" width="33%"></td>
+        <td><img src="./docs/sample/warped/03009.jpg" width="300px"></td>
+        <td><img src="./docs/sample/warped/03016.jpg" width="300px"></td>
+        <td><img src="./docs/sample/warped/03025.jpg" width="300px"></td>
     </tr>
     <tr>
         <td> Confidence </td>
