@@ -57,8 +57,17 @@ class WPODNet(nn.Module):
         self.prob_layer = nn.Conv2d(128, 2, kernel_size=3, padding=1)
         self.bbox_layer = nn.Conv2d(128, 6, kernel_size=3, padding=1)
 
-    def forward(self, x):
-        h = self.backbone(x)
-        prob = self.prob_layer(h)
-        bbox = self.bbox_layer(h)
-        return torch.softmax(prob, dim=1), bbox
+        # Registry a dummy tensor for retrieve the attached device
+        self.register_buffer('dummy', torch.Tensor(), persistent=False)
+
+    @property
+    def device(self) -> torch.device:
+        return self.dummy.device
+
+    def forward(self, image: torch.Tensor):
+        feature: torch.Tensor = self.backbone(image)
+        probs: torch.Tensor = self.prob_layer(feature)
+        probs = torch.softmax(probs, dim=1)
+        affines: torch.Tensor = self.bbox_layer(feature)
+
+        return probs, affines
