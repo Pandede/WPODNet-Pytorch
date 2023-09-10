@@ -4,7 +4,8 @@ from typing import Tuple, Union
 import numpy as np
 import torch
 from PIL import Image, ImageDraw
-from torchvision.transforms.functional import _get_perspective_coeffs, to_tensor
+from torchvision.transforms.functional import (_get_perspective_coeffs,
+                                               to_tensor)
 
 from .model import WPODNet
 
@@ -20,9 +21,9 @@ class Prediction:
         drawer = ImageDraw.Draw(canvas)
         drawer.polygon(
             [(x, y) for x, y in self.bounds],
-            outline=outline, 
+            outline=outline,
             width=width
-            )
+        )
         canvas.save(fp)
 
     def warp(self, fp: Union[str, Path], width: int = 208, height: int = 60):
@@ -45,6 +46,7 @@ class Predictor:
 
     def __init__(self, wpodnet: WPODNet):
         self.wpodnet = wpodnet
+        self.wpodnet.eval()
 
     def _resize_to_fixed_ratio(self, image: Image.Image) -> Image.Image:
         h, w = image.height, image.width
