@@ -1,16 +1,12 @@
 import errno
-import os.path
 from argparse import ArgumentParser
+from pathlib import Path
 
-from PIL import Image
 import torch
+
 from wpodnet.backend import Predictor
 from wpodnet.model import WPODNet
-
-
-def has_parent_folder(p: str) -> bool:
-    return os.path.isdir(os.path.dirname(p))
-
+from wpodnet.stream import ImageStreamer
 
 if __name__ == '__main__':
     parser = ArgumentParser()
@@ -28,42 +24,55 @@ if __name__ == '__main__':
     parser.add_argument(
         '--save-annotated',
         type=str,
-        help='save the annotated image to the given filepath'
+        help='save the annotated image at the given folder'
     )
     parser.add_argument(
         '--save-warped',
         type=str,
-        help='save the warped image to the given filepath'
+        help='save the warped image at the given folder'
     )
     args = parser.parse_args()
 
-    if not has_parent_folder(args.save_annotated):
-        raise FileNotFoundError(errno.ENOENT, 'No such directory', f"'{args.save_annotated}'")
+    if args.save_annotated is not None:
+        save_annotated = Path(args.save_annotated)
+        if not save_annotated.is_dir():
+            raise FileNotFoundError(errno.ENOTDIR, 'No such directory', f"'{args.save_annotated}'")
+    else:
+        save_annotated = None
 
-    if not has_parent_folder(args.save_warped):
-        raise FileNotFoundError(errno.ENOENT, 'No such directory', f"'{args.save_warped}'")
+    if args.save_warped is not None:
+        save_warped = Path(args.save_warped)
+        if not save_warped.is_dir():
+            raise FileNotFoundError(errno.ENOTDIR, 'No such directory', f"'{args.save_warped}'")
+    else:
+        save_warped = None
 
-    image = Image.open(args.source)
-
+    # Prepare for the model
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     model = WPODNet()
     model.to(device)
 
-    # Load checkpoint
     checkpoint = torch.load(args.weight)
     model.load_state_dict(checkpoint)
 
     predictor = Predictor(model)
-    prediction = predictor.predict(image)
 
-    print('Prediction')
-    print('  bounds', prediction.bounds.tolist())
-    print('  confidence', prediction.confidence)
+    streamer = ImageStreamer(args.source)
+    for i, image in enumerate(streamer):
+        prediction = predictor.predict(image)
 
-    if args.save_annotated is not None:
-        prediction.annotate(args.save_annotated)
-        print(f'Saved the annotated image at {args.save_annotated}')
+        print(f'Prediction #{i}')
+        print('  bounds', prediction.bounds.tolist())
+        print('  confidence', prediction.confidence)
 
-    if args.save_warped is not None:
-        prediction.warp(args.save_warped)
-        print(f'Saved the warped image at {args.save_warped}')
+        if save_annotated:
+            annotated_path = save_annotated / Path(image.filename).name
+            prediction.annotate(annotated_path)
+            print(f'Saved the annotated image at {annotated_path}')
+
+        if save_warped:
+            warped_path = save_warped / Path(image.filename).name
+            prediction.warp(warped_path)
+            print(f'Saved the warped image at {warped_path}')
+
+        print()
