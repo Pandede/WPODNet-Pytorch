@@ -30,6 +30,12 @@ class TestImageStreamer:
         images = list(streamer)
         assert len(images) == 3
 
+        # Add a non-image file
+        (image_folder / 'text.doc').touch()
+        streamer = ImageStreamer(image_folder)
+        images = list(streamer)
+        assert len(images) == 3
+
     def test_load_invalid_image(self, tmp_path: Path):
         doc_file = tmp_path / 'image.doc'
 
