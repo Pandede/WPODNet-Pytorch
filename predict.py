@@ -36,14 +36,14 @@ if __name__ == '__main__':
     if args.save_annotated is not None:
         save_annotated = Path(args.save_annotated)
         if not save_annotated.is_dir():
-            raise FileNotFoundError(errno.ENOTDIR, 'No such directory', f"'{args.save_annotated}'")
+            raise FileNotFoundError(errno.ENOTDIR, 'No such directory', args.save_annotated)
     else:
         save_annotated = None
 
     if args.save_warped is not None:
         save_warped = Path(args.save_warped)
         if not save_warped.is_dir():
-            raise FileNotFoundError(errno.ENOTDIR, 'No such directory', f"'{args.save_warped}'")
+            raise FileNotFoundError(errno.ENOTDIR, 'No such directory', args.save_warped)
     else:
         save_warped = None
 
