@@ -45,15 +45,17 @@ The model in Keras is built by the essay author, see [sergiomsilva/alpr-unconstr
 4. Download the pretrained weight `wpodnet.pth` from [Google Drive](https://drive.google.com/file/d/1SPfJIgEBX6j0fQbQryQxRp_sHkEnJnKa/view?usp=share_link)
 5. Predict with an image
     ```bash
-    python3 predict.py  docs/sample/original/03009.jpg \                    # The path to the image
-                        -w weights/wpodnet.pth \                            # The path to the weight
-                        --save-annotated docs/sample/annotated/03009.jpg    # The path to save the annotated image
-                        --save-warped docs/sample/warped/03009.jpg          # The path to save the warped image
+    python3 predict.py  docs/sample/original/03009.jpg          # The path to the an image
+                        # docs/sample/original                  # OR the path to the directory with bulk of images
+                        -w weights/wpodnet.pth                  # The path to the weight
+                        --save-annotated docs/sample/annotated  # The directory to save the annotated images
+                        --save-warped docs/sample/warped        # The directory to save the warped images
     ```
 
 ## Future works
 - [x] Inference with GPU
-- [ ] Inference with bulk of images or video
+- [x] Inference with bulk of images
+- [ ] Inference with video
 - [ ] Introduce training procedure
 - [x] The matrix multiplication seems weird in function `postprocess`, may improve the computation.
 
