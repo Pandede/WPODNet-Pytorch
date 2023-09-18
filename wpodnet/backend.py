@@ -121,5 +121,5 @@ class Predictor:
         return Prediction(
             image=image,
             bounds=bounds.astype(np.int32),
-            confidence=max_prob
+            confidence=max_prob.item()
         )
