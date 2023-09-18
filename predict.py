@@ -67,12 +67,14 @@ if __name__ == '__main__':
 
         if save_annotated:
             annotated_path = save_annotated / Path(image.filename).name
-            prediction.annotate(annotated_path)
+            annotated = prediction.annotate()
+            annotated.save(annotated_path)
             print(f'Saved the annotated image at {annotated_path}')
 
         if save_warped:
             warped_path = save_warped / Path(image.filename).name
-            prediction.warp(warped_path)
+            warped = prediction.warp()
+            warped.save(warped_path)
             print(f'Saved the warped image at {warped_path}')
 
         print()
