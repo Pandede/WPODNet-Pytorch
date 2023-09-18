@@ -16,7 +16,7 @@ class Prediction:
         self.bounds = bounds
         self.confidence = confidence
 
-    def annotate(self, fp: Union[str, Path], outline: str = 'red', width: int = 3) -> Image.Image:
+    def annotate(self, outline: str = 'red', width: int = 3) -> Image.Image:
         canvas = self.image.copy()
         drawer = ImageDraw.Draw(canvas)
         drawer.polygon(
@@ -24,16 +24,14 @@ class Prediction:
             outline=outline,
             width=width
         )
-        canvas.save(fp)
         return canvas
 
-    def warp(self, fp: Union[str, Path], width: int = 208, height: int = 60) -> Image.Image:
+    def warp(self, width: int = 208, height: int = 60) -> Image.Image:
         # Get the perspective matrix
         src_points = self.bounds.tolist()
         dst_points = [[0, 0], [width, 0], [width, height], [0, height]]
         coeffs = _get_perspective_coeffs(src_points, dst_points)
         warped = self.image.transform((width, height), Image.PERSPECTIVE, coeffs)
-        warped.save(fp)
         return warped
 
 
