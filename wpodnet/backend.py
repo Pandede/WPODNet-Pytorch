@@ -1,5 +1,4 @@
-from pathlib import Path
-from typing import Tuple, Union
+from typing import List, Tuple
 
 import numpy as np
 import torch
@@ -16,6 +15,12 @@ class Prediction:
         self.bounds = bounds
         self.confidence = confidence
 
+    def _get_perspective_coeffs(self, width: int, height: int) -> List[float]:
+        # Get the perspective matrix
+        src_points = self.bounds.tolist()
+        dst_points = [[0, 0], [width, 0], [width, height], [0, height]]
+        return _get_perspective_coeffs(src_points, dst_points)
+
     def annotate(self, outline: str = 'red', width: int = 3) -> Image.Image:
         canvas = self.image.copy()
         drawer = ImageDraw.Draw(canvas)
@@ -28,9 +33,7 @@ class Prediction:
 
     def warp(self, width: int = 208, height: int = 60) -> Image.Image:
         # Get the perspective matrix
-        src_points = self.bounds.tolist()
-        dst_points = [[0, 0], [width, 0], [width, height], [0, height]]
-        coeffs = _get_perspective_coeffs(src_points, dst_points)
+        coeffs = self._get_perspective_coeffs(width, height)
         warped = self.image.transform((width, height), Image.PERSPECTIVE, coeffs)
         return warped
 
