@@ -81,7 +81,7 @@ class Predictor:
     def _get_max_anchor(self, probs: np.ndarray) -> Tuple[int, int]:
         return np.unravel_index(probs.argmax(), probs.shape)
 
-    def _get_bounds(self, affines: np.ndarray, anchor_y: int, anchor_x: int) -> np.ndarray:
+    def _get_bounds(self, affines: np.ndarray, anchor_y: int, anchor_x: int, scaling_ratio: float = 1.0) -> np.ndarray:
         # Compute theta
         theta = affines[:, anchor_y, anchor_x]
         theta = theta.reshape((2, 3))
@@ -89,7 +89,7 @@ class Predictor:
         theta[1, 1] = max(theta[1, 1], 0.0)
 
         # Convert theta into the bounding polygon
-        bounds = np.matmul(theta, self._q) * self._scaling_const
+        bounds = np.matmul(theta, self._q) * self._scaling_const * scaling_ratio
 
         # Normalize the bounds
         _, grid_h, grid_w = affines.shape
@@ -98,7 +98,7 @@ class Predictor:
 
         return np.transpose(bounds)
 
-    def predict(self, image: Image.Image) -> Prediction:
+    def predict(self, image: Image.Image, scaling_ratio: float = 1.0) -> Prediction:
         orig_h, orig_w = image.height, image.width
 
         # Resize the image to fixed ratio
@@ -115,7 +115,7 @@ class Predictor:
         # Get the theta with maximum probability
         max_prob = np.amax(probs)
         anchor_y, anchor_x = self._get_max_anchor(probs)
-        bounds = self._get_bounds(affines, anchor_y, anchor_x)
+        bounds = self._get_bounds(affines, anchor_y, anchor_x, scaling_ratio)
 
         bounds[:, 0] *= orig_w
         bounds[:, 1] *= orig_h
