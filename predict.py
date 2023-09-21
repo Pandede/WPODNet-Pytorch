@@ -1,5 +1,5 @@
 import errno
-from argparse import ArgumentParser
+from argparse import ArgumentParser, ArgumentTypeError
 from pathlib import Path
 
 import torch
@@ -22,6 +22,12 @@ if __name__ == '__main__':
         help='the path to the model weight'
     )
     parser.add_argument(
+        '--scale',
+        type=float,
+        default=1.0,
+        help='adjust the scaling ratio. default to 1.0.'
+    )
+    parser.add_argument(
         '--save-annotated',
         type=str,
         help='save the annotated image at the given folder'
@@ -32,6 +38,9 @@ if __name__ == '__main__':
         help='save the warped image at the given folder'
     )
     args = parser.parse_args()
+
+    if args.scale <= 0.0:
+        raise ArgumentTypeError(message='scale must be greater than 0.0')
 
     if args.save_annotated is not None:
         save_annotated = Path(args.save_annotated)
@@ -59,7 +68,7 @@ if __name__ == '__main__':
 
     streamer = ImageStreamer(args.source)
     for i, image in enumerate(streamer):
-        prediction = predictor.predict(image)
+        prediction = predictor.predict(image, scaling_ratio=args.scale)
 
         print(f'Prediction #{i}')
         print('  bounds', prediction.bounds.tolist())
