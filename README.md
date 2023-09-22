@@ -26,9 +26,9 @@ The model in Keras is built by the essay author, see [sergiomsilva/alpr-unconstr
     </tr>
     <tr>
         <td> Confidence </td>
-        <td> 0.9705 </td>
-        <td> 0.9828 </td>
-        <td> 0.9987 </td>
+        <td> 0.9841 </td>
+        <td> 0.9945 </td>
+        <td> 0.9979 </td>
     </tr>
 </table>
 
