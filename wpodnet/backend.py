@@ -45,6 +45,7 @@ class Predictor:
         [1., 1., 1., 1.]
     ])
     _scaling_const = 7.75
+    _stride = 16
 
     def __init__(self, wpodnet: WPODNet):
         self.wpodnet = wpodnet
@@ -55,10 +56,14 @@ class Predictor:
 
         wh_ratio = max(h, w) / min(h, w)
         side = int(wh_ratio * 288)
-        bound_dim = min(side + side % 16, 608)
+        bound_dim = min(side + side % self._stride, 608)
 
         factor = bound_dim / min(h, w)
         reg_w, reg_h = int(w * factor), int(h * factor)
+
+        # Ensure the both width and height are the multiply of `self._stride`
+        reg_w += self._stride - reg_w % self._stride
+        reg_h += self._stride - reg_h % self._stride
 
         return image.resize((reg_w, reg_h))
 
