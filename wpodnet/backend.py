@@ -51,12 +51,12 @@ class Predictor:
         self.wpodnet = wpodnet
         self.wpodnet.eval()
 
-    def _resize_to_fixed_ratio(self, image: Image.Image, Dmin: int, Dmax: int) -> Image.Image:
+    def _resize_to_fixed_ratio(self, image: Image.Image, dim_min: int, dim_max: int) -> Image.Image:
         h, w = image.height, image.width
 
         wh_ratio = max(h, w) / min(h, w)
-        side = int(wh_ratio * Dmin)
-        bound_dim = min(side + side % self._stride, Dmax)
+        side = int(wh_ratio * dim_min)
+        bound_dim = min(side + side % self._stride, dim_max)
 
         factor = bound_dim / min(h, w)
         reg_w, reg_h = int(w * factor), int(h * factor)
@@ -103,12 +103,12 @@ class Predictor:
 
         return np.transpose(bounds)
 
-    def predict(self, image: Image.Image, scaling_ratio: float = 1.0, Dmin: int = 288, Dmax: int = 608) -> Prediction:
+    def predict(self, image: Image.Image, scaling_ratio: float = 1.0, dim_min: int = 288, dim_max: int = 608) -> Prediction:
         orig_h, orig_w = image.height, image.width
 
         # Resize the image to fixed ratio
         # This operation is convienence for setup the anchors
-        resized = self._resize_to_fixed_ratio(image, Dmin=Dmin, Dmax=Dmax)
+        resized = self._resize_to_fixed_ratio(image, dim_min=dim_min, dim_max=dim_max)
         resized = self._to_torch_image(resized)
         resized = resized.to(self.wpodnet.device)
 
