@@ -18,7 +18,7 @@ jobs:
       - name: Lint with Ruff
         run: |
           pip install ruff
-          ruff --format=github .
+          ruff -- --format=github .
         continue-on-error: true
   test:
     runs-on: ubuntu-latest
