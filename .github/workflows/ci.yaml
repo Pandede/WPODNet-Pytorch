@@ -1,0 +1,38 @@
+name: CI
+
+on: [push]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Lint with Ruff
+        run: |
+          pip install ruff
+          ruff -- --format=github .
+        continue-on-error: true
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Test with pytest
+        run: |
+          pip install pytest pytest-cov pytest-mock
+          python -m pytest --junitxml=junit/test-results.xml --cov --cov-report=xml --cov-report=html
