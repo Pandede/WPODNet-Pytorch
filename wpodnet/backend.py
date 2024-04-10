@@ -58,7 +58,7 @@ class Predictor:
         side = int(wh_ratio * dim_min)
         bound_dim = min(side + side % self._stride, dim_max)
 
-        factor = bound_dim / min(h, w)
+        factor = bound_dim / max(h, w)
         reg_w, reg_h = int(w * factor), int(h * factor)
 
         # Ensure the both width and height are the multiply of `self._stride`
