@@ -42,7 +42,7 @@ The model in Keras is built by the essay author, see [sergiomsilva/alpr-unconstr
     ```bash
     pip3 install -r requirements.txt
     ```
-4. Download the pretrained weight `wpodnet.pth` from [Google Drive](https://drive.google.com/file/d/1SPfJIgEBX6j0fQbQryQxRp_sHkEnJnKa/view?usp=share_link)
+4. Download the pretrained weight `wpodnet.pth` from [here](https://github.com/Pandede/WPODNet-Pytorch/releases/download/1.0.0/wpodnet.pth)
 5. Predict with an image
     ```bash
     python3 predict.py  docs/sample/original/03009.jpg          # The path to the an image
