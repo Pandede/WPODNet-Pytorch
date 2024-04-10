@@ -62,8 +62,13 @@ class Predictor:
         reg_w, reg_h = int(w * factor), int(h * factor)
 
         # Ensure the both width and height are the multiply of `self._stride`
-        reg_w += self._stride - reg_w % self._stride
-        reg_h += self._stride - reg_h % self._stride
+        reg_w_mod = reg_w % self._stride
+        if reg_w_mod > 0:
+            reg_w += self._stride - reg_w_mod
+
+        reg_h_mod = reg_h % self._stride
+        if reg_h_mod > 0:
+            reg_h += self._stride - reg_h % self._stride
 
         return image.resize((reg_w, reg_h))
 
