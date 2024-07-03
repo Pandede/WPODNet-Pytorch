@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw
 from torchvision.transforms.functional import (_get_perspective_coeffs,
                                                to_tensor)
 
-from .model import WPODNet
+from ..model import WPODNet
 
 
 class Prediction:
@@ -34,7 +34,8 @@ class Prediction:
     def warp(self, width: int = 208, height: int = 60) -> Image.Image:
         # Get the perspective matrix
         coeffs = self._get_perspective_coeffs(width, height)
-        warped = self.image.transform((width, height), Image.PERSPECTIVE, coeffs)
+        warped = self.image.transform(
+            (width, height), Image.PERSPECTIVE, coeffs)
         return warped
 
 
@@ -99,7 +100,8 @@ class Predictor:
         theta[1, 1] = max(theta[1, 1], 0.0)
 
         # Convert theta into the bounding polygon
-        bounds = np.matmul(theta, self._q) * self._scaling_const * scaling_ratio
+        bounds = np.matmul(theta, self._q) * \
+            self._scaling_const * scaling_ratio
 
         # Normalize the bounds
         _, grid_h, grid_w = affines.shape
@@ -113,7 +115,8 @@ class Predictor:
 
         # Resize the image to fixed ratio
         # This operation is convienence for setup the anchors
-        resized = self._resize_to_fixed_ratio(image, dim_min=dim_min, dim_max=dim_max)
+        resized = self._resize_to_fixed_ratio(
+            image, dim_min=dim_min, dim_max=dim_max)
         resized = self._to_torch_image(resized)
         resized = resized.to(self.wpodnet.device)
 
