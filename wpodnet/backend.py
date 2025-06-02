@@ -9,7 +9,7 @@ from torchvision.transforms.functional import _get_perspective_coeffs, to_tensor
 from .model import WPODNet
 
 
-@dataclass
+@dataclass(frozen=True)
 class Prediction:
     """
     The prediction result from WPODNet.
