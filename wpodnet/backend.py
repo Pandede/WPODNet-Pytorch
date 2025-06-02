@@ -108,7 +108,7 @@ class Predictor:
 
         return np.transpose(bounds)
 
-    def predict(self, image: Image.Image, scaling_ratio: float = 1.0, dim_min: int = 288, dim_max: int = 608) -> Prediction:
+    def predict(self, image: Image.Image, scaling_ratio: float = 1.0, dim_min: int = 512, dim_max: int = 768) -> Prediction:
         orig_h, orig_w = image.height, image.width
 
         # Resize the image to fixed ratio
