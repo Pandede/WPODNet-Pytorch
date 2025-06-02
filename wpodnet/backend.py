@@ -56,15 +56,15 @@ class Prediction:
         drawer.polygon(self.bounds, fill=fill, outline=outline, width=width)
 
     def warp(
-        self, canvas: Image.Image, width: int = 208, height: int = 60
+        self, canvas: Image.Image, width: int = 240, height: int = 80
     ) -> Image.Image:  # pragma: no cover
         """
         Warps the image with perspective based on the bounding polygon.
 
         Args:
             canvas (PIL.Image.Image): The image to be warped.
-            width (int): The width of the output warped image. Defaults to 208.
-            height (int): The height of the output warped image. Defaults to 60.
+            width (int): The width of the output warped image. Defaults to 240.
+            height (int): The height of the output warped image. Defaults to 80.
 
         Returns:
             PIL.Image.Image: The warped image.
