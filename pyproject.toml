@@ -41,12 +41,7 @@ classifiers = [
     "Operating System :: MacOS",
     "Operating System :: Microsoft :: Windows",
 ]
-dependencies = [
-    "numpy",
-    "Pillow",
-    "torch",
-    "torchvision"
-]
+dependencies = ["numpy", "Pillow", "torch", "torchvision"]
 
 [tool.setuptools]
 packages.find.include = ["wpodnet"]
@@ -54,9 +49,7 @@ packages.find.include = ["wpodnet"]
 [tool.setuptools_scm]
 
 [project.optional-dependencies]
-dev = [
-    "pytest"
-]
+test = ["pytest", "pooch"]
 
 [project.urls]
 Source = "https://github.com/Pandede/WPODNet-Pytorch"
@@ -93,3 +86,20 @@ ignore = [
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
+
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["wpodnet"]
+
+[tool.coverage.report]
+show_missing = true
+exclude_lines = [
+    "return NotImplemented",
+    "pragma: no cover",
+    "pragma: deprecated",
+    "pragma: develop",
+    "pass",
+]

@@ -38,7 +38,7 @@ class Prediction:
         fill: Optional[str] = None,
         outline: Optional[str] = None,
         width: int = 1,
-    ) -> None:
+    ) -> None:  # pragma: no cover
         """
         Annotates the image with the bounding polygon.
 
@@ -55,7 +55,7 @@ class Prediction:
         drawer = ImageDraw.Draw(canvas)
         drawer.polygon(self.bounds, fill=fill, outline=outline, width=width)
 
-    def warp(self, canvas: Image.Image) -> Image.Image:
+    def warp(self, canvas: Image.Image) -> Image.Image:  # pragma: no cover
         """
         Warps the image with perspective based on the bounding polygon.
 
