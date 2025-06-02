@@ -1,4 +1,3 @@
-__version__ = "1.0.3"
 from pathlib import Path
 from typing import Union
 

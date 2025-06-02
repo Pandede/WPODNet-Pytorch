@@ -1,13 +1,13 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=64", "setuptools-scm[toml]>=8"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "wpodnet-pytorch"
-dynamic = ["dependencies", "version"]
+dynamic = ["version"]
 description = "The implementation of ECCV 2018 paper \"License Plate Detection and Recognition in Unconstrained Scenarios\" in PyTorch"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 keywords = [
     "python",
     "ai",
@@ -41,13 +41,17 @@ classifiers = [
     "Operating System :: MacOS",
     "Operating System :: Microsoft :: Windows",
 ]
+dependencies = [
+    "numpy",
+    "Pillow",
+    "torch",
+    "torchvision"
+]
 
 [tool.setuptools]
-packages = { find = { where = ["."], include = ["wpodnet", "wpodnet.*"] } }
+packages.find.include = ["wpodnet"]
 
-[tool.setuptools.dynamic]
-dependencies = { file = "requirements.txt" }
-version = { attr = "wpodnet.__version__" }
+[tool.setuptools_scm]
 
 [project.optional-dependencies]
 dev = [
@@ -55,4 +59,37 @@ dev = [
 ]
 
 [project.urls]
-"Source" = "https://github.com/Pandede/WPODNet-Pytorch"
+Source = "https://github.com/Pandede/WPODNet-Pytorch"
+
+[tool.ruff]
+target-version = "py38"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle (error)
+    "F",   # pyflakes
+    "B",   # bugbear
+    "B9",
+    "C4",  # flake8-comprehensions
+    "SIM", # flake8-simplify
+    "I",   # isort
+    "UP",  # pyupgrade
+    "PIE", # flake8-pie
+    "PGH", # pygrep-hooks
+    "PYI", # flake8-pyi
+    "RUF",
+]
+ignore = [
+    # only relevant if you run a script with `python -0`,
+    # which seems unlikely for any of the scripts in this repo
+    "B011",
+    # Leave it to the formatter to split long lines and
+    # the judgement of all of us.
+    "E501",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
