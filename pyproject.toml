@@ -47,9 +47,10 @@ dependencies = ["numpy", "Pillow", "torch", "torchvision"]
 packages.find.include = ["wpodnet"]
 
 [tool.setuptools_scm]
+fallback_version = "0.1.0"
 
 [project.optional-dependencies]
-test = ["pytest", "pooch"]
+test = ["pytest", "pytest-cov", "pooch"]
 
 [project.urls]
 Source = "https://github.com/Pandede/WPODNet-Pytorch"
