@@ -68,7 +68,7 @@ class Predictor:
 
         reg_h_mod = reg_h % self._stride
         if reg_h_mod > 0:
-            reg_h += self._stride - reg_h % self._stride
+            reg_h += self._stride - reg_h_mod
 
         return image.resize((reg_w, reg_h))
 
