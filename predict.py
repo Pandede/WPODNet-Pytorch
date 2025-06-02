@@ -4,8 +4,7 @@ from pathlib import Path
 
 import torch
 
-from wpodnet.backend import Predictor
-from wpodnet.model import WPODNet
+from wpodnet import Predictor, load_wpodnet_from_checkpoint
 from wpodnet.stream import ImageStreamer
 
 if __name__ == '__main__':
@@ -58,11 +57,7 @@ if __name__ == '__main__':
 
     # Prepare for the model
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    model = WPODNet()
-    model.to(device)
-
-    checkpoint = torch.load(args.weight)
-    model.load_state_dict(checkpoint)
+    model = load_wpodnet_from_checkpoint(args.weight).to(device)
 
     predictor = Predictor(model)
 
