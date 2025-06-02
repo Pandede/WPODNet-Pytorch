@@ -1,11 +1,38 @@
 import errno
 from argparse import ArgumentParser, ArgumentTypeError
 from pathlib import Path
+from typing import List, Union
 
 import torch
+from PIL import Image, UnidentifiedImageError
 
 from wpodnet import Predictor, load_wpodnet_from_checkpoint
-from wpodnet.stream import ImageStreamer
+
+
+def list_image_paths(p: Union[str, Path]) -> List[Path]:
+    """
+    List all images in a directory.
+
+    Args:
+        path (Union[str, Path]): The path to the directory containing images.
+
+    Returns:
+        Generator[Image.Image]: A generator of PIL Image objects.
+    """
+    p = Path(p)
+    if not p.is_dir():
+        raise FileNotFoundError(errno.ENOTDIR, "No such directory", args.save_annotated)
+
+    image_paths: List[Path] = []
+    for f in p.glob("**/*"):
+        try:
+            with Image.open(f) as image:
+                image.verify()
+            image_paths.append(f)
+        except UnidentifiedImageError:
+            pass
+    return image_paths
+
 
 if __name__ == "__main__":
     parser = ArgumentParser()
@@ -56,8 +83,16 @@ if __name__ == "__main__":
 
     predictor = Predictor(model)
 
-    streamer = ImageStreamer(args.source)
-    for i, image in enumerate(streamer):
+    source = Path(args.source)
+    if source.is_file():
+        image_paths = [source]
+    elif source.is_dir():
+        image_paths = list_image_paths(source)
+    else:
+        raise FileNotFoundError(errno.ENOENT, "No such file or directory", args.source)
+
+    for i, image_path in enumerate(image_paths):
+        image = Image.open(image_path)
         prediction = predictor.predict(image, scaling_ratio=args.scale)
 
         print(f"Prediction #{i}")
