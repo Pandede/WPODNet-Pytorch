@@ -26,4 +26,4 @@ def load_wpodnet_from_checkpoint(ckpt_path: Union[str, Path]) -> WPODNet:
     return model
 
 
-__all__ = ["WPODNet", "load_wpodnet_from_checkpoint", "Prediction", "Predictor"]
+__all__ = ["Prediction", "Predictor", "WPODNet", "load_wpodnet_from_checkpoint"]

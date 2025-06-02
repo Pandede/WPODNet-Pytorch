@@ -3,8 +3,7 @@ from typing import List, Tuple
 import numpy as np
 import torch
 from PIL import Image, ImageDraw
-from torchvision.transforms.functional import (_get_perspective_coeffs,
-                                               to_tensor)
+from torchvision.transforms.functional import _get_perspective_coeffs, to_tensor
 
 from .model import WPODNet
 

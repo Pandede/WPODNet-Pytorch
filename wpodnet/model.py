@@ -4,7 +4,7 @@ import torch.nn as nn
 
 class BasicConvBlock(nn.Module):
     def __init__(self, in_channels: int, out_channels: int):
-        super(BasicConvBlock, self).__init__()
+        super().__init__()
         self.conv_layer = nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1)
         self.bn_layer = nn.BatchNorm2d(out_channels, momentum=0.99, eps=0.001)
         self.act_layer = nn.ReLU(inplace=True)
@@ -17,7 +17,7 @@ class BasicConvBlock(nn.Module):
 
 class ResBlock(nn.Module):
     def __init__(self, channels: int):
-        super(ResBlock, self).__init__()
+        super().__init__()
         self.conv_block = BasicConvBlock(channels, channels)
         self.sec_layer = nn.Conv2d(channels, channels, kernel_size=3, padding=1)
         self.bn_layer = nn.BatchNorm2d(channels, momentum=0.99, eps=0.001)
@@ -32,7 +32,7 @@ class ResBlock(nn.Module):
 
 class WPODNet(nn.Module):
     def __init__(self):
-        super(WPODNet, self).__init__()
+        super().__init__()
         self.backbone = nn.Sequential(
             BasicConvBlock(3, 16),
             BasicConvBlock(16, 16),
